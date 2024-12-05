@@ -6,7 +6,7 @@ function App() {
   const confettiBtn=()=>{
     confetti({
       particleCount:1500,
-      spread:100,
+      spread:360,
     })
 
   }
