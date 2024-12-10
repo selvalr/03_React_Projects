@@ -1,34 +1,44 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import SkeletonLoader from './Skelton'; // Ensure the correct import for the Skeleton component
+import React, { useState, useEffect } from 'react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
-  const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
-
+  
   useEffect(() => {
     setTimeout(() => {
-      setData({
-        title: 'Selva',
-        description: 'Hello',
-        about: 'What',
-      });
-      setLoading(false);
-    }, 4000);
-  }, []); // Empty dependency array ensures useEffect runs only once on mount
+      setData([
+        { title: 'Item 1', description: 'This is the description of item 1' },
+        { title: 'Item 2', description: 'This is the description of item 2' },
+        { title: 'Item 3', description: 'This is the description of item 3' },
+      ]);
+    }, 3000); // Simulated delay
+  }, []);
 
   return (
-    <>
-      {loading ? (
-        <SkeletonLoader /> // Show skeleton loader when loading
-      ) : (
-        <div>
-          <h2>{data.title}</h2>
-          <h2>{data.description}</h2>
-          <h2>{data.about}</h2>
-        </div>
-      )}
-    </>
+    <div className="App">
+      <div className="container">
+        
+        
+        {!data ? (
+          <div>
+             <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            <Skeleton count={3} height={20} width={250} />
+            <Skeleton count={3} height={15} width={300} style={{ marginTop: '10px' }} />
+            </SkeletonTheme>
+          </div>
+        ) : (
+          <ul>
+            {data.map((item, index) => (
+              <li key={index}>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   );
 }
 
