@@ -1,27 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import db from '../firebase';
-import {getDoc, doc } from 'firebase/firestore';
-import play from '../assets/images/play-icon-black.png';
-import trailer from '../assets/images/play-icon-white.png';
-import group from '../assets/images/group-icon.png';
+
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
+import db from '../firebase'
+import {getDoc, doc } from 'firebase/firestore'
 
 const Detail = () => {
     const {id} = useParams()
     const [detailData, setDetailData] = useState({})
+  
     useEffect(() => {
-        let moviesRef = doc(db, 'movies', id)
-        getDoc(moviesRef).then((doc) => {
-          console.log(doc);
-          
-                setDetailData(doc.data())
-            }).catch((error) => {
-                console.log(error)
-            })
-        }, [id])
+  console.log('Fetching movie with id:', id);
+  const fetchData = async () => {
+    try {
+      const moviesRef = doc(db, 'movies', id);
+      const docSnap = await getDoc(moviesRef);
+      if (docSnap.exists()) {
+        console.log('Document data:', docSnap.data());
+        setDetailData(docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.log('Error fetching document:', error);
+    }
+  };
+  fetchData();
+}, [id]);
+
+
+
         console.log(detailData)
-  return (
+ 
+ if (!detailData || Object.keys(detailData).length === 0) {
+    return <div>Loading...</div>;  // prevent rendering until data is loaded
+  }
+        return (
     <Container>
         <Background>
             <img src={detailData.backgroundImg} alt={detailData.title} />
@@ -33,11 +47,11 @@ const Detail = () => {
         <ContentMeta>
             <Controls>
                 <Player>
-                <img src={play} alt="" />
+                <img src='/images/play-icon-black.png' alt="" />
                 <span>Play</span>
                 </Player>
                 <Trailer>
-                    <img src={trailer} alt='' />
+                    <img src='/images/play-icon-white.png' alt='' />
                 <span>Trailer</span>
                 </Trailer>
                 <AddList>
@@ -46,7 +60,7 @@ const Detail = () => {
                 </AddList>
                 <GroupWatch>
                     <div>
-                        <img src={group} alt='' />
+                        <img src='/images/group-icon.png' alt='' />
                     </div>
                 </GroupWatch>
                 </Controls>
