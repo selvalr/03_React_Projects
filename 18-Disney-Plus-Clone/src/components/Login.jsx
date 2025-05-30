@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-import backGround from "../assets/images/login-background.jpg"
-import logoOne from "../assets/images/cta-logo-one.png"
-import logoTwo from "../assets/images/cta-logo-two.png"
+import backGround from "../assets/images/login-background.jpg";
+import logoOne from "../assets/images/cta-logo-one.png";
+import logoTwo from "../assets/images/cta-logo-two.png";
 
 const Container = styled.section`
   overflow: hidden;
@@ -76,6 +76,7 @@ const SignUp = styled.a`
   padding: 16.5px 0;
   border: 1px solid transparent;
   border-radius: 4px;
+  cursor: pointer;
 
   &:hover {
     background-color: #0483ee;
